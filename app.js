@@ -78,3 +78,46 @@ app.get('/cipher', (req, res) => {
     res.send(result)
 
 })
+
+app.get('/lottery', (req, res) => {
+    const array = req.query.arr;
+
+    var newArray = array.map(function (x) {
+        return parseInt(x, 10);
+    });
+
+    if (newArray.length !== 6) {
+        res.send('input 6 arr paramters');
+    }
+
+    const randomArr = [];
+
+    for (let i = 0; i < newArray.length; i++) {
+        randomArr.push((Math.floor(Math.random() * (20 - 1) + 1)));
+    }
+
+
+    let count = 0;
+    for (let j = 0; j < newArray.length; j++) {
+        if (newArray.includes(randomArr[j])) {
+            count++;
+        }
+        
+    }
+
+    console.log(count);
+
+    if(count === 6) {
+        res.send('Wow! Unbelievable! You could have won the mega millions');
+    } else if (count === 5) {
+        res.send('Congratulations! You win $100!');
+    } else if (count === 4) {
+        res.send('Congratulations! You win a free ticket!');
+    } else {
+        res.send('You lose');
+    }
+
+    console.log(randomArr);
+
+
+})
